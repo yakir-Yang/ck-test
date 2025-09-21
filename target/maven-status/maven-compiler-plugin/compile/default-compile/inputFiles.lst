@@ -3,9 +3,7 @@
 /Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/service/ResultHandlerService.java
 /Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/entry/resp/ColumnMetaResp.java
 /Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/entry/resp/QueryResultResp.java
-/Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/controller/ClickHouseController.java
 /Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/config/ClickHouseConfig.java
 /Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/ClickhouseTestApplication.java
-/Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/service/ClickHouseService.java
 /Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/controller/CustomerClickHouseTestController.java
 /Users/kk/Desktop/ck-test/src/main/java/com/example/clickhouse/service/ClickHouseQueryService.java

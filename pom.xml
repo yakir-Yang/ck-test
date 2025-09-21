@@ -31,10 +31,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Spring Boot Starter JDBC -->
+        <!-- Spring JDBC -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
         </dependency>
 
         <!-- HikariCP连接池 -->
@@ -42,13 +42,6 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>3.4.1</version>
-        </dependency>
-
-        <!-- ClickHouse JDBC驱动 -->
-        <dependency>
-            <groupId>com.clickhouse</groupId>
-            <artifactId>clickhouse-jdbc</artifactId>
-            <version>0.4.6</version>
         </dependency>
 
         <!-- 客户使用的ClickHouse JDBC驱动 -->
@@ -65,12 +58,6 @@
             <version>1.30.0</version>
         </dependency>
 
-        <!-- Spring Boot Starter Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Lombok -->
         <dependency>
