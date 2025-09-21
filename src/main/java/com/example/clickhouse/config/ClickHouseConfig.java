@@ -1,6 +1,8 @@
 package com.example.clickhouse.config;
 
 import com.clickhouse.jdbc.ClickHouseDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,7 +67,24 @@ public class ClickHouseConfig {
             throw new RuntimeException("创建ClickHouse数据源失败", e);
         }
         
-        return ckDataSource;
+        // 创建HikariCP连接池配置
+        HikariConfig config = new HikariConfig();
+        config.setDataSource(ckDataSource);
+        
+        // HikariCP连接池配置
+        config.setConnectionTimeout(30000);
+        config.setIdleTimeout(600000);
+        config.setMaxLifetime(1800000);
+        config.setMaximumPoolSize(10);
+        config.setMinimumIdle(0); // 启动时不创建连接
+        config.setPoolName("ClickHouseHikariCP");
+        
+        // 设置连接验证查询，避免启动时立即连接
+        config.setConnectionTestQuery("SELECT 1");
+        config.setInitializationFailTimeout(-1); // 不立即失败
+        config.setLeakDetectionThreshold(0); // 禁用泄漏检测
+        
+        return new HikariDataSource(config);
     }
 
     @Bean
