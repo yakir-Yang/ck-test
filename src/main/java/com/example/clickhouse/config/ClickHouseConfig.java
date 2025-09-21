@@ -1,13 +1,13 @@
 package com.example.clickhouse.config;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import com.clickhouse.jdbc.ClickHouseDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 public class ClickHouseConfig {
@@ -23,33 +23,45 @@ public class ClickHouseConfig {
 
     @Bean
     public DataSource clickHouseDataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(url);
-        config.setUsername(username);
-        config.setPassword(password);
-        config.setDriverClassName("com.clickhouse.jdbc.ClickHouseDriver");
+        // 创建ClickHouse属性配置
+        Properties ckProperties = new Properties();
         
-        // HikariCP连接池配置
-        config.setConnectionTimeout(30000);
-        config.setIdleTimeout(600000);
-        config.setMaxLifetime(1800000);
-        config.setMaximumPoolSize(10);
-        config.setMinimumIdle(0); // 启动时不创建连接
-        config.setPoolName("ClickHouseHikariCP");
+        // 根据plusTime属性设置超时时间
+        if (System.getProperty("plusTime") != null && !"".equals(System.getProperty("plusTime"))) {
+            ckProperties.setProperty("dataTransferTimeout", String.valueOf(30 * 10000000));
+            ckProperties.setProperty("maxExecutionTime", String.valueOf(30 * 10000000));
+            ckProperties.setProperty("socketTimeout", String.valueOf(120 * 10000000));
+        } else {
+            ckProperties.setProperty("dataTransferTimeout", String.valueOf(30 * 1000));
+            ckProperties.setProperty("maxExecutionTime", String.valueOf(30 * 1000));
+            ckProperties.setProperty("socketTimeout", String.valueOf(120 * 1000));
+        }
         
-        // 设置连接验证查询，避免启动时立即连接
-        config.setConnectionTestQuery("SELECT 1");
-        config.setInitializationFailTimeout(-1); // 不立即失败
-        config.setLeakDetectionThreshold(0); // 禁用泄漏检测
+        // 设置用户和密码
+        if (System.getProperty("user") != null && !"".equals(System.getProperty("user"))) {
+            ckProperties.setProperty("user", System.getProperty("user"));
+        } else {
+            ckProperties.setProperty("user", username);
+        }
         
-        // ClickHouse特定配置
-        config.addDataSourceProperty("allowMultiQueries", "true");
-        config.addDataSourceProperty("allow_multiple_queries", "true");
-        config.addDataSourceProperty("query_settings", "allow_multi_statements=1");
-        config.addDataSourceProperty("compress", "0"); // 禁用压缩
-        config.addDataSourceProperty("decompress", "0"); // 禁用解压缩
+        if (System.getProperty("pw") != null && !"".equals(System.getProperty("pw"))) {
+            ckProperties.setProperty("password", System.getProperty("pw"));
+        } else {
+            ckProperties.setProperty("password", password);
+        }
         
-        return new HikariDataSource(config);
+        // 设置URL
+        ckProperties.setProperty("url", url);
+        
+        // 创建ClickHouse数据源
+        ClickHouseDataSource ckDataSource;
+        try {
+            ckDataSource = new ClickHouseDataSource(url, ckProperties);
+        } catch (java.sql.SQLException e) {
+            throw new RuntimeException("创建ClickHouse数据源失败", e);
+        }
+        
+        return ckDataSource;
     }
 
     @Bean

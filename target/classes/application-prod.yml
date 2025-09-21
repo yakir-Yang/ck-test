@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
+    url: jdbc:clickhouse://新主机:端口/新数据库?allow_multiple_queries=true&query_settings=allow_multi_statements=1&allowMultiQueries=true&compress=0&decompress=0
+    username: 新用户名
+    password: 新密码
+    hikari:
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+      minimum-idle: 0
+      pool-name: ClickHouseHikariCP
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.zaxxer.hikari: DEBUG
+    com.clickhouse: DEBUG
