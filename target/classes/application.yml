@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
+    url: jdbc:clickhouse://10.151.0.15:8123/saas_shoplus_analysis?allow_multiple_queries=true&query_settings=allow_multi_statements=1&allowMultiQueries=true
+    username: admin
+    password: gPXaYNwQv1PsJuG
+    hikari:
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: ClickHouseHikariCP
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.zaxxer.hikari: DEBUG
+    com.clickhouse: DEBUG

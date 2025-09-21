@@ -1,0 +1,4 @@
+com/example/clickhouse/controller/ClickHouseController.class
+com/example/clickhouse/config/ClickHouseConfig.class
+com/example/clickhouse/ClickhouseTestApplication.class
+com/example/clickhouse/service/ClickHouseService.class
