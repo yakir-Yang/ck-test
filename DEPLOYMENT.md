@@ -94,6 +94,12 @@ curl -X GET http://your-server:8080/api/clickhouse/database-info
 - 检查网络连接
 - 验证用户名密码是否正确
 
+### 3. LZ4压缩错误
+如果遇到 `LZ4 is not supported` 错误，应用已配置禁用压缩：
+- `compress=0` - 禁用压缩
+- `decompress=0` - 禁用解压缩
+- 这样可以避免LZ4库依赖问题
+
 ### 3. 查看应用日志
 ```bash
 # 如果使用nohup运行

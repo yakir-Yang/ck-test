@@ -46,6 +46,8 @@ public class ClickHouseConfig {
         config.addDataSourceProperty("allowMultiQueries", "true");
         config.addDataSourceProperty("allow_multiple_queries", "true");
         config.addDataSourceProperty("query_settings", "allow_multi_statements=1");
+        config.addDataSourceProperty("compress", "0"); // 禁用压缩
+        config.addDataSourceProperty("decompress", "0"); // 禁用解压缩
         
         return new HikariDataSource(config);
     }
