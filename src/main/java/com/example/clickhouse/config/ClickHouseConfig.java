@@ -53,6 +53,10 @@ public class ClickHouseConfig {
         // 设置URL
         ckProperties.setProperty("url", url);
         
+        // 禁用压缩以避免LZ4错误
+        ckProperties.setProperty("compress", "0");
+        ckProperties.setProperty("decompress", "0");
+        
         // 创建ClickHouse数据源
         ClickHouseDataSource ckDataSource;
         try {
